@@ -1,8 +1,8 @@
 {
   "author": "Marc Fisher",
   "company": "Teradata Inc.",
-  "name": "teraworldcuisine",
-  "title" : "Tera-World Cuisine",
+  "name": "terarestaurateur",
+  "title" : "Tera-Restaurateur",
   "description": "Awesome multiplayer, social, online, browser-based game used to showcase the power of data analytics on Teradata and IMM",
   "version": "0.0.2",
   "dependencies": {
