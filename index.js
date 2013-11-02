@@ -1,5 +1,5 @@
 /*!
- * Tera-World Cuisine
+ * Tera-Restaurateur
  *
  * Copyright 2013 Teradata Corp.
  * Marc Fisher <marc.fisher@teradata.com>
