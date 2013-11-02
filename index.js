@@ -48,7 +48,8 @@ else {
       app.use(express.favicon());
       app.use(express.logger('dev'));
       app.use(connect.compress());
-      app.use(express.bodyParser());
+      app.use(express.json());
+      app.use(express.urlencoded());
       app.use(express.cookieParser());
       app.use(express.methodOverride());
       app.use(app.router);
@@ -83,5 +84,5 @@ else {
       res.render('index', { title: pj.title, dev: process.argv[2] || false } );
     });
 
-    http.createServer(app).listen(5060);
+    http.createServer(app).listen(6002);
 }
