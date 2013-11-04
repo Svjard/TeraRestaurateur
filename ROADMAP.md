@@ -9,6 +9,9 @@ Lets do the United States only.
 	* Login Persists for 3 Days
 	* Must work on all devices
 	* Can we get people to provide where they are from, who they work for, years in the industry, others?
+	* Logo: World Globe with Menu
+	* Background color: td orange
+	* 
 2. Startup Screen
 	* On first launch have popup to go to "How To Play Video (on YouTube)""
 	* Setup Your Restuarant (if not created yet)
