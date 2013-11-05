@@ -11,11 +11,10 @@ Lets do the United States only.
 	* Can we get people to provide where they are from, who they work for, years in the industry, others?
 	* Logo: World Globe with Menu
 	* Background color: td orange
-	* 
 2. Startup Screen
-	* On first launch have popup to go to "How To Play Video (on YouTube)""
-	* Setup Your Restuarant (if not created yet)
-	* Otherwise tab view (w/ icons for "Restaurant", "Marketing", "Reviews", "Reports", "Help")
+	* On first login proceed directly to the setup restuarant screen
+	* After restuarant is setup, in main screen launch have popup to go to "How To Play Video (on YouTube)""
+	* Home has tab view (w/ icons for "Restaurant", "Marketing", "Reviews", "Reports", "Help")
 3. Setup Resturant
 	* Name (must be unique)
 	* Type: Bistro, Buffet, Cafe, Deli, Coffeehouse, Steakhouse, Gastropub, Carvery, Diner, Bar & Grill
@@ -42,6 +41,7 @@ Lets do the United States only.
     * Meeting people at the conference lets you enter a code into a game to help your sales: Meet Mike K., Scott Gnau, Carrie B., etc.. Tweeting about a talk
       with a specific hashtag "@TeraWorldCuisine Learned a lot about UDA setup and benefits. #tdpartners14 #[name of restaurant] #session267" helps your
       resturant also boost sales.
+    * Data mini-games.... (TBD)
 6. Review Screen
 	* Twitter feed of people who did "@TeraWorldCuisine ... #tdpartners14 #[name of restaurant]"
 	* Ability to filter by sentiment analysis
@@ -60,6 +60,9 @@ Lets do the United States only.
 	* Set Language Preference (i18n support, can be interrupt though?)
 	* FAQs
 	* Go to video link
+
+
+Ability to travel in game: http://bl.ocks.org/mbostock/6738360 as animation
 
 
 At the booth:
@@ -89,6 +92,7 @@ Demographics of all locations in the game
   * farming data (livestock and crops) [yield, cost, quality, ...]
   * taxes import/export
 Exchange rates loaded every hour
+Transportation Data: http://openflights.org/data.html
 
 To Get:
   1. ftp://ftp.ncdc.noaa.gov/pub/data/gsod/

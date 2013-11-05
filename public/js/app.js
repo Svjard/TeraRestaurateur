@@ -2,10 +2,10 @@
 define(
   [
     'backbone','marionette','router','controller','vent','text!pj',
-    'views/Login'
+    'views/Login', 'views/Home', 'views/home/Setup'
   ],
   function(
-    Backbone, Marionette, Router, Controller, vent, pj, Login
+    Backbone, Marionette, Router, Controller, vent, pj, Login, Home, Setup
   ) {
     'use strict';
 
@@ -13,6 +13,7 @@ define(
 
     var user,
         router,
+        hash,
         model;
     var app = new Marionette.Application();
   
@@ -35,8 +36,8 @@ define(
         //return false;
       });
 
-      console.log(vent.trigger);
-      vent.trigger('login:success');
+      hash = window.location.hash;
+      app.main.show(new Login());
     });
 
     app.on('initialize:after', function(options) {
@@ -45,7 +46,7 @@ define(
     });
 
     vent.on('login:success', function(data) {
-       initInterface(data);
+      initInterface(data);
     });
 
     vent.on('login:failure', function(error) {
@@ -59,9 +60,9 @@ define(
     function initInterface(u) {
       //user = _.clone(u.user, true);
       console.log('OK');
-      app.main.show(new Login());
+      app.main.show(new Setup());
       
-      router.navigate(window.location.hash || '#', { 'trigger': true });
+      router.navigate(hash || '#', { 'trigger': true });
     }
 
     return app;

@@ -1,0 +1,95 @@
+<% if (typeof obj === undefined) obj = {}; obj.type = {value: 'Bistro', options: ['Bistro', 'Bar & Grill']}; obj.style = {value: 'Fine Dining', options: ['Fine Dining', 'Casual Dining']}; %>
+<h2 class="setup-title">Setup Your Restuarant</h2>
+<form role="form" class="setup">
+	<div class="form-group" style="margin-bottom: 5px;">
+		<label>Name</label>
+		<input type="text" class="form-control" name="name" placeholder="Resturant Name">
+		<!-- Unique name is required message -->
+	</div>
+	<div class="form-group" style="margin-bottom: 5px;">
+		<label>Type</label>
+		<div class="btn-group" style="display: block;">
+	        <a class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" style="text-align: left;">
+	            <%= obj.type.value || '' %> <i class="fa fa-caret-down" style="margin-right: 3px;font-size: 16px;float: right;margin-top: 3px;"></i>
+	        </a>
+	        <ul class="dropdown-menu" style="border-top-right-radius: 0;border-top-left-radius: 0;padding: 2px;margin-top: 34px;">
+	            <% for (var i = 0; i < obj.type.options.length; i++) { %>
+	            <li><a name="type" href="#"><%= obj.type.options[i] %></a></li>
+	            <% } %>
+	        </ul>
+	    </div>
+	</div>
+	<div class="form-group">
+		<label style="margin-top: 5px;">Style</label>
+		<div class="btn-group" style="display: block;">
+	        <a class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" style="text-align: left;">
+	            <%= obj.style.value || '' %> <i class="fa fa-caret-down" style="margin-right: 3px;font-size: 16px;float: right;margin-top: 3px;"></i>
+	        </a>
+	        <ul class="dropdown-menu" style="border-top-right-radius: 0;border-top-left-radius: 0;padding: 2px;margin-top: 34px;">
+	            <% for (var i = 0; i < obj.style.options.length; i++) { %>
+	            <li><a name="style" href="#"><%= obj.style.options[i] %></a></li>
+	            <% } %>
+	        </ul>
+	    </div>
+	</div>
+	<div class="form-group">
+		<label style="margin-top: 5px;">Location</label>
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+	        <ol class="carousel-indicators">
+	          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+	          <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+	          <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
+	          <li data-target="#carousel-example-generic" data-slide-to="3" class=""></li>
+	          <li data-target="#carousel-example-generic" data-slide-to="4" class=""></li>
+	        </ol>
+	        <div class="carousel-inner">
+	        	<div class="item active">
+	          		<div class="location"></div>
+	          		<div class="carousel-caption" style="color: rgb(245, 115, 0);padding: 0 0 15px 0;">
+	            		<h3 style="font-size: 40px;">Chicago</h3>
+	            		<p style="font-size: 14px;text-shadow: none;color: black;">Celebrity chefs? Check. World-renowned restaurants? Check. Ethnic dining from around the globe? Check. Chicago's dining scene is unparalleled. From lavish cuisine to deep dish pizza, one thing is for certain in Chicago: an appetite is required.</p>
+	            	</div>
+	        	</div>
+	        	<div class="item">
+	        		<div class="location"></div>
+	        		<div class="carousel-caption" style="font-size: 48px;color: rgb(245, 115, 0);padding: 0;">
+	           			<h3 style="font-size: 50px;">New York</h3>
+	           			<p>...</p>
+	            	</div>
+	        	</div>
+	        	<div class="item">
+	            	<div class="location"></div>
+	            	<div class="carousel-caption" style="font-size: 48px;color: rgb(245, 115, 0);padding: 0;">
+	            		<h3 style="font-size: 50px;">Los Angelos</h3>
+	            		<p>...</p>
+	            	</div>
+	       		</div>
+	       		<div class="item">
+	            	<div class="location"></div>
+	            	<div class="carousel-caption" style="font-size: 48px;color: rgb(245, 115, 0);padding: 0;">
+	            		<h3 style="font-size: 50px;">Dallas</h3>
+	            		<p>...</p>
+	            	</div>
+	        	</div>
+	        	<div class="item">
+	        		<div class="location"></div>
+	            	<div class="carousel-caption" style="font-size: 48px;color: rgb(245, 115, 0);padding: 0;">
+	            		<h3 style="font-size: 50px;">Memphis</h3>
+	            		<p>...</p>
+	            	</div>
+	        	</div>
+	        </div>
+	        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev" style="background-image: none;text-shadow: 1px 1px 7px black,-1px -1px 7px black;background-color: rgb(255, 255, 255);">
+	          <i class="fa fa-chevron-left" style="position: absolute;right: 50%;top: 50%;"></i>
+	        </a>
+	        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next" style="background-image: none;text-shadow: 1px 1px 7px black,-1px -1px 7px black;background-color: rgb(255, 255, 255);">
+	          <i class="fa fa-chevron-right" style="position: absolute;right: 50%;top: 50%;"></i>
+	        </a>
+      </div>
+	</div>
+	<div class="form-group">
+		<label style="margin-top: 5px;">Starting Cash</label>
+		<p class="form-control-static">$50,000</p>
+	</div>
+	<button type="button" class="btn btn-primary btn-lg btn-block" style="text-align: center;">Start</button>
+</form>
