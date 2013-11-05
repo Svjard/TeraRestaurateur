@@ -1,6 +1,8 @@
 # Roadmap #
 
 Lets do the United States only.
+In game ads about Teradata products features.
+Can choose to have 1-50 top chefs visit but requires a data mini game w difficulty based on chefs rank.OR can hire them somehow?
 
 1. Login Screen
 	* Register
