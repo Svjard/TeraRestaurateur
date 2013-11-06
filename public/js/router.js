@@ -5,8 +5,9 @@ define(
 
     return Marionette.AppRouter.extend({
       appRoutes: {
-      	'datatemperature'  : 'datatemperature',
-      	'config/:id'       : 'config'
+      	'dashboard'  : 'dashboard',
+      	'teradata'   : 'teradata',
+        'home/:init?*': 'home'
       }
     });
   }

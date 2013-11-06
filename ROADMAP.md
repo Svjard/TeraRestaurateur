@@ -7,13 +7,15 @@ Visiting  a booth can help you upgrade, like visit Aprimo and upgrade your IMM a
 
 1. Login Screen
 	* Register
-	* Login via Google/Facebook/Twitter
+	* Login via Facebook/Twitter
 	* Forgot Password
 	* Login Persists for 3 Days
 	* Must work on all devices
 	* Can we get people to provide where they are from, who they work for, years in the industry, others?
 	* Logo: World Globe with Menu
 	* Background color: td orange
+	* Change create account to register everywhere
+	* Accept terms and services agreement in the Register screen
 2. Startup Screen
 	* On first login proceed directly to the setup restuarant screen
 	* After restuarant is setup, in main screen launch have popup to go to "How To Play Video (on YouTube)""

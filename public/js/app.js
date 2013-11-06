@@ -2,10 +2,11 @@
 define(
   [
     'backbone','marionette','router','controller','vent','text!pj',
-    'views/Login', 'views/Home', 'views/home/Setup', 'models/Restaurant', 'views/AccountSetup'
+    'views/Login', 'views/Home', 'views/home/Setup', 'models/Restaurant', 'views/Register',
+    'views/GameDashboard', 'views/DBDashboard'
   ],
   function(
-    Backbone, Marionette, Router, Controller, vent, pj, Login, Home, Setup, Restaurant, AccountSetup
+    Backbone, Marionette, Router, Controller, vent, pj, Login, Home, Setup, Restaurant, Register, GameDashboard, DBDashboard
   ) {
     'use strict';
 
@@ -61,22 +62,34 @@ define(
     });
 
     vent.on('login:setupaccount', function() {
-      app.main.show(new AccountSetup());
+      app.main.show(new Register());
     });
 
     vent.on('nav:logout', function() {
       
     });
 
-    function initInterface(u) {
-      //user = _.clone(u.user, true);
-      if (!model.get('id')) {
-        app.main.show(new Setup({model: model}));
+    vent.on('route:dashboard', function() {
+      app.main.show(new GameDashboard());
+    });
+
+    vent.on('route:teradata', function() {
+      app.main.show(new DBDashboard());
+    });
+
+    vent.on('route:home', function(init) {
+      if (init) {
+        app.main.show(new Setup());
       }
       else {
-        app.main.show(new Home({model: model}));
+        app.main.show(new Home());
       }
-      
+    });
+
+    function initInterface(u) {
+      //user = _.clone(u.user, true);
+      app.main.show(new Home({model: model}));
+
       router.navigate(hash || '#', { 'trigger': true });
     }
 

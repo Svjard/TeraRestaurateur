@@ -11,6 +11,7 @@ var express = require('express'),
     async = require('async'),
     http = require('http'),
     path = require ('path'),
+    bcrypt = require('bcrypt'),
     java = require('java'),
     MongoClient = require('mongodb').MongoClient,
     ObjectID = require('mongodb').ObjectID,
@@ -19,16 +20,23 @@ var express = require('express'),
     LocalStrategy = require('passport-local').Strategy,
     TwitterStrategy = require('passport-twitter').Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
+    SALT_WORK_FACTOR = 10,
     pj = require('./package.json');
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-  /*User.findById(id, function(err, user) {
-    done(err, user);
-  });*/
+  teraRestaurateurDB.collection('Users', function (err, collection) {
+    if (err) {
+      done(err, null);
+    }
+    
+    collection.find({_id: ObjectID(id)}, function(err, user) {
+      done(err, user);
+    });
+  });
 });
 
 passport.use(new TwitterStrategy({
@@ -58,30 +66,32 @@ passport.use(new FacebookStrategy({
   }
 ));*/
 
-passport.use(new LocalStrategy({emailField: 'email', passwordField: 'passw'}, function (emailField, passwordField, done) {
-  process.nextTick(function () {
-    return done(null, {});
-    /*db.collection(dbCollection, function (error, collection) {
-      if (!error) {
+passport.use(new LocalStrategy(function (username, password, done) {
+  process.nextTick(function() {
+    teraRestaurateurDB.collection('Users', function (err, collection) {
+      if (!err) {
         collection.findOne({
-          'email': sil@gmail.com
-          'password': silvester // use there some crypto function
+          'username': username
         }, function (err, user) {
           if (err) {
             return done(err);
           }
-          
+              
           if (!user) {
             console.log('this email does not exist');
             return done(null, false);
           }
-          
+
+          if (!bcrypt.compareSync(password, user.hash)) {
+            return done(null, false);
+          }
+              
           return done(null, user);
         });
       } else {
         console.log(5, 'DB error');
       }
-    });*/
+    });
   });
 }));
 
@@ -104,8 +114,7 @@ app.configure(function(){
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(connect.compress());
-  app.use(express.json());
-  app.use(express.urlencoded());
+  app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.methodOverride());
   app.use(express.session({ secret: 'keyboard cat' }));
@@ -122,6 +131,14 @@ app.configure(function(){
 
 app.configure('development', function(){
     app.use(express.errorHandler());
+});
+
+// Store pointers to mongo DBs
+var mongoTeraRestaurateur = 'bart.td.teradata.com:27017/terarestaurateur',
+    teraRestaurateurDB;
+MongoClient.connect('mongodb://' + mongoTeraRestaurateur + '?maxPoolSize=100', function(err, db) {
+  if(err) { return console.dir(err); }
+  teraRestaurateurDB = db;
 });
 
 function originPolicy(req, res, next) {
@@ -152,6 +169,25 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
 
 app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }));
+
+app.post('/api/register', function(req, res, next) {
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(req.body.passw, salt);
+  var user = {username: req.body.username, salt: salt, hash: hash, email: req.body.email, firstname: req.body.firstname, lastname: req.body.lastname};
+
+  teraRestaurateurDB.collection('Users', function(err, collection) {
+    collection.insert(user,
+      function(err, docs) {
+        if (!err) {
+          req.logIn(docs[0], function(err) {
+            if (err) return next(err);
+            res.redirect('/#home/init');
+          });
+        }
+      }
+    );
+  });
+});
 
 app.get('/api/types', function(req, res) {
   MongoClient.connect('mongodb://bart.td.teradata.com:27017/terarestaurateur', function(err, db) {
