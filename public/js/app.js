@@ -2,10 +2,10 @@
 define(
   [
     'backbone','marionette','router','controller','vent','text!pj',
-    'views/Login', 'views/Home', 'views/home/Setup'
+    'views/Login', 'views/Home', 'views/home/Setup', 'models/Restaurant', 'views/AccountSetup'
   ],
   function(
-    Backbone, Marionette, Router, Controller, vent, pj, Login, Home, Setup
+    Backbone, Marionette, Router, Controller, vent, pj, Login, Home, Setup, Restaurant, AccountSetup
   ) {
     'use strict';
 
@@ -46,11 +46,22 @@ define(
     });
 
     vent.on('login:success', function(data) {
+      if (!data.r) {
+        model = new Restaurant();
+      }
+      else {
+        model = new Restaurant(data.r);
+      }
+
       initInterface(data);
     });
 
     vent.on('login:failure', function(error) {
       login.alert.show(new views.loginalert({ model: new Backbone.Model({ 'status': 'Error', 'message': error }) }));
+    });
+
+    vent.on('login:setupaccount', function() {
+      app.main.show(new AccountSetup());
     });
 
     vent.on('nav:logout', function() {
@@ -59,8 +70,12 @@ define(
 
     function initInterface(u) {
       //user = _.clone(u.user, true);
-      console.log('OK');
-      app.main.show(new Setup());
+      if (!model.get('id')) {
+        app.main.show(new Setup({model: model}));
+      }
+      else {
+        app.main.show(new Home({model: model}));
+      }
       
       router.navigate(hash || '#', { 'trigger': true });
     }

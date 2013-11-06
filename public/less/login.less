@@ -1,16 +1,15 @@
-.login-container {
+.tr-container {
   margin: 80px auto;
   position: relative;
-  width: 90%;
   text-align: center;
 }
-.login-container .row > div {
+.tr-container .row > div {
   margin-bottom: 1em;
 }
-.login-container .row > div:last-child {
+.tr-container .row > div:last-child {
   margin-bottom: 0;
 }
-.login-container #logo {
+.tr-container #logo {
   position: absolute;
   top: -50px;
   left: 50%;
@@ -28,19 +27,20 @@
     color: black;
   }
 }
-.login-container #signup-btn {
+.tr-container #signup-btn {
   padding-top: 15px;
   padding-bottom: 15px;
   color: #fff;
   background-color: #222222;
   border-color: #1d1d1d;
 }
-.login-container #signup-btn:hover {
+.tr-container #signup-btn:hover {
   background-color: #1d1d1d;
   border-color: #181818;
 }
-#login {
+.tr {
   position: relative;
+  text-align: left;
   padding: 25px 50px 50px 50px;
   margin-bottom: 1em;
   background-color: #FFF;
@@ -51,21 +51,21 @@
   -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.65);
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.65);
 }
-#login #login-form {
+.tr .tr-form {
   padding: 0;
   margin-top: 2em;
   margin-bottom: 2em;
   text-align: left;
 }
-#login #login-form label {
+.tr .tr-form label {
   display: none;
 }
-#login #login-form .form-control {
+.tr .tr-form .form-control {
   height: 40px;
   padding-top: 8px;
   padding-bottom: 8px;
 }
-#login #login-btn {
+.tr #login-btn {
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: 18px;
@@ -189,14 +189,14 @@ fieldset[disabled] .btn-twitter.active {
   .login-container .row > div {
     margin-bottom: 0;
   }
-  #login #login-form {
+  .tr .tr-form {
     padding: 0 25px;
     text-align: left;
   }
 }
 
 @media (max-width: 768px) {
-  #login #login-btn {
+  .tr #login-btn {
     padding-top: 2px;
     padding-bottom: 2px;
     font-size: 12px;

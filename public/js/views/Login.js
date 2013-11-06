@@ -7,12 +7,16 @@ define(
 
     return Marionette.ItemView.extend({
       template: login,
-      className: 'login-container',
+      className: 'tr-container container',
       events: {
-        'click #login-btn' : 'login'
+        'click #login-btn' : 'login',
+        'click #signup-btn' : 'setupAccount'
       },
       login: function() {
         vent.trigger('login:success');
+      },
+      setupAccount: function() {
+        vent.trigger('login:setupaccount');
       }
     });
   }
