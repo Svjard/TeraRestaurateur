@@ -9,11 +9,12 @@ define(
       template: login,
       className: 'tr-container container',
       events: {
-        'click #login-btn' : 'login',
+        'submit #login-form' : 'login',
         'click #signup-btn' : 'setupAccount'
       },
       login: function() {
-        vent.trigger('login:success');
+        // Validate username and password are not empty.
+        // Additionally username in the form of an email string.
       },
       setupAccount: function() {
         vent.trigger('login:setupaccount');

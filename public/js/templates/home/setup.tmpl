@@ -1,4 +1,4 @@
-<% if (typeof obj === undefined) obj = {}; obj.type = {value: 'Bistro', options: ['Bistro', 'Bar & Grill']}; obj.style = {value: 'Fine Dining', options: ['Fine Dining', 'Casual Dining']}; %>
+<% console.log(obj) %>
 <h2 class="setup-title">Setup Your Restuarant</h2>
 <form role="form" class="setup">
 	<div class="form-group" style="margin-bottom: 5px;">
@@ -6,28 +6,52 @@
 		<input type="text" class="form-control" name="name" placeholder="Resturant Name">
 		<!-- Unique name is required message -->
 	</div>
-	<div class="form-group" style="margin-bottom: 5px;">
-		<label>Type</label>
-		<div class="btn-group" style="display: block;">
-	        <a class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" style="text-align: left;">
-	            <%= obj.type.value || '' %> <i class="fa fa-caret-down" style="margin-right: 3px;font-size: 16px;float: right;margin-top: 3px;"></i>
-	        </a>
-	        <ul class="dropdown-menu" style="border-top-right-radius: 0;border-top-left-radius: 0;padding: 2px;margin-top: 34px;">
-	            <% for (var i = 0; i < obj.type.options.length; i++) { %>
-	            <li><a name="type" href="#"><%= obj.type.options[i] %></a></li>
-	            <% } %>
-	        </ul>
-	    </div>
-	</div>
 	<div class="form-group">
 		<label style="margin-top: 5px;">Style</label>
 		<div class="btn-group" style="display: block;">
 	        <a class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" style="text-align: left;">
-	            <%= obj.style.value || '' %> <i class="fa fa-caret-down" style="margin-right: 3px;font-size: 16px;float: right;margin-top: 3px;"></i>
+	            <%= obj.style || 'Please Choose An Option' %> <i class="fa fa-caret-down" style="margin-right: 3px;font-size: 16px;float: right;margin-top: 3px;"></i>
 	        </a>
 	        <ul class="dropdown-menu" style="border-top-right-radius: 0;border-top-left-radius: 0;padding: 2px;margin-top: 34px;">
-	            <% for (var i = 0; i < obj.style.options.length; i++) { %>
-	            <li><a name="style" href="#"><%= obj.style.options[i] %></a></li>
+	            <% for (var i = 0; i < obj.styles.length; i++) { %>
+	            <li><a name="style" href="#"><%= obj.styles[i].name %></a></li>
+	            <% } %>
+	        </ul>
+	    </div>
+	    <div id="styles-carousel" style="margin-top: 40px;" class="carousel slide" data-ride="carousel">
+	        <ol class="carousel-indicators">
+	        	<% for (var i = 0; i < obj.styles.length; i++) { %>
+	        	<li data-target="#styles-carousel" data-slide-to="0" class="<%= (i === 0) ? 'active' : '' %>"></li>
+	        	<% } %>
+	        </ol>
+	        <div class="carousel-inner">
+	        	<% for (var i = 0; i < obj.styles.length; i++) { %>
+	        	<div class="item <%= (i === 0) ? 'active' : '' %>">
+	          		<img src="images/<%= obj.styles[i].image %>" style="margin:auto;"/>
+	          		<div class="carousel-caption" style="color: rgb(245, 115, 0);padding: 0 0 15px 0;">
+	            		<h3 style="font-size: 40px;"><%= obj.styles[i].name %></h3>
+	            		<p style="font-size: 14px;text-shadow: none;color: black;"><%= obj.styles[i].description %></p>
+	            	</div>
+	        	</div>
+	        	<% } %>
+	        </div>
+	        <a class="left carousel-control" href="#styles-carousel" data-slide="prev" style="background-image: none;text-shadow: 1px 1px 7px black,-1px -1px 7px black;background-color: rgb(255, 255, 255);">
+	          <i class="fa fa-chevron-left" style="position: absolute;right: 50%;top: 50%;"></i>
+	        </a>
+	        <a class="right carousel-control" href="#styles-carousel" data-slide="next" style="background-image: none;text-shadow: 1px 1px 7px black,-1px -1px 7px black;background-color: rgb(255, 255, 255);">
+	          <i class="fa fa-chevron-right" style="position: absolute;right: 50%;top: 50%;"></i>
+	        </a>
+      </div>
+	</div>
+	<div class="form-group">
+		<label style="margin-top: 5px;">Cuisine</label>
+		<div class="btn-group" style="display: block;">
+	        <a class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" style="text-align: left;">
+	            <%= obj.cuisine || 'Please Choose An Option' %> <i class="fa fa-caret-down" style="margin-right: 3px;font-size: 16px;float: right;margin-top: 3px;"></i>
+	        </a>
+	        <ul class="dropdown-menu" style="border-top-right-radius: 0;border-top-left-radius: 0;padding: 2px;margin-top: 34px;">
+	            <% for (var i = 0; i < obj.cuisines.length; i++) { %>
+	            <li><a name="style" href="#"><%= obj.cuisines[i].name %></a></li>
 	            <% } %>
 	        </ul>
 	    </div>

@@ -10,9 +10,6 @@ define(
       className: 'container',
       intialize: function() {
         
-      },
-      onShow: function() {
-      	//$('.carousel').carousel();
       }
     });
   }

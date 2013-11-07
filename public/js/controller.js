@@ -10,9 +10,11 @@ define(['vent'], function (vent) {
     teradata:function() {
     	vent.trigger('route:teradata');
     },
-    home: function(init) {
-    	console.log('home, ' + init);
-    	vent.trigger('route:home', init);
+    home: function() {
+    	vent.trigger('route:home');
+    },
+    init: function() {
+    	vent.trigger('route:init');
     }
   };
 });

@@ -5,7 +5,7 @@ define(
     'views/Login', 'views/Home', 'views/home/Setup', 'models/Restaurant', 'views/Register',
     'views/GameDashboard', 'views/DBDashboard'
   ],
-  function(
+  function (
     Backbone, Marionette, Router, Controller, vent, pj, Login, Home, Setup, Restaurant, Register, GameDashboard, DBDashboard
   ) {
     'use strict';
@@ -47,10 +47,7 @@ define(
     });
 
     vent.on('login:success', function(data) {
-      if (!data.r) {
-        model = new Restaurant();
-      }
-      else {
+      if (data.r) {
         model = new Restaurant(data.r);
       }
 
@@ -78,12 +75,12 @@ define(
     });
 
     vent.on('route:home', function(init) {
-      if (init) {
-        app.main.show(new Setup());
-      }
-      else {
-        app.main.show(new Home());
-      }
+      app.main.show(new Home());
+    });
+
+    vent.on('route:init', function(init) {
+      model = new Restaurant();
+      app.main.show(new Setup({model: model}));
     });
 
     function initInterface(u) {
