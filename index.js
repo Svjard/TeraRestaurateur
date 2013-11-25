@@ -177,4 +177,4 @@ app.get('/api/styles', function(req, res) {
   });
 });
 
-http.createServer(app).listen(6002);
+http.createServer(app).listen(7000);

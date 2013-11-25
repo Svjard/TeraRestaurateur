@@ -27,7 +27,7 @@
 	        <div class="carousel-inner">
 	        	<% for (var i = 0; i < obj.styles.length; i++) { %>
 	        	<div class="item <%= (i === 0) ? 'active' : '' %>">
-	          		<img src="images/<%= obj.styles[i].image %>" style="margin:auto;"/>
+	          		<img src="images/<%= obj.styles[i].image %>" style="margin: auto;opacity: 0.4;"/>
 	          		<div class="carousel-caption" style="color: rgb(245, 115, 0);padding: 0 0 15px 0;">
 	            		<h3 style="font-size: 40px;"><%= obj.styles[i].name %></h3>
 	            		<p style="font-size: 14px;text-shadow: none;color: black;"><%= obj.styles[i].description %></p>
