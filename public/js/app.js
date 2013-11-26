@@ -1,12 +1,12 @@
 /*global $*/
 define(
   [
-    'backbone','marionette','router','controller','vent','text!pj',
-    'views/Login', 'views/Home', 'views/home/Setup', 'models/Restaurant', 'views/Register',
-    'views/GameDashboard', 'views/DBDashboard'
+    'backbone','marionette','vent','text!pj',
+    'views/Login', 'views/Home', 'views/main/Setup', 'models/Restaurant', 'views/Register',
+    'views/GameDashboard', 'views/DBDashboard', 'views/main/Users', 'views/nav/Navbar'
   ],
   function (
-    Backbone, Marionette, Router, Controller, vent, pj, Login, Home, Setup, Restaurant, Register, GameDashboard, DBDashboard
+    Backbone, Marionette, vent, pj, Login, Home, Setup, Restaurant, Register, GameDashboard, DBDashboard, Users, Navbar
   ) {
     'use strict';
 
@@ -19,6 +19,7 @@ define(
     var app = new Marionette.Application();
   
     app.addRegions({
+      navbar: '#navbar',
       main: '#main'
     });
 
@@ -33,62 +34,55 @@ define(
       });
 
       $(document).on('click', 'a[href="#"]', function(e) {
-        //e.stopImmediatePropagation();
-        //return false;
+        e.preventDefault();
       });
 
       hash = window.location.hash;
-      app.main.show(new Login());
+      $.ajax({
+        error: function(jqxhr, status, error) {
+          app.main.show(new Login());
+        },
+        success: function(data, status, jqxhr) {
+          user = _.clone(data, true);
+          router = new (Backbone.Marionette.AppRouter.extend({
+            "routes": {
+              "home": function() {
+                app.main.show(new Home());
+              },
+              "setup": function() {
+                model = new Restaurant();
+                app.main.show(new Setup({model: model}));
+              },
+              "users": function() {
+                app.main.show(new Users());
+              },
+              "users/:id": function(id) {
+                // TODO
+              },
+              "dashboard": function() {
+                app.main.show(new GameDashboard());
+              },
+              "teradata": function() {
+                app.main.show(new DBDashboard());
+              }
+            }
+          }))();
+
+          app.navbar.show(new Navbar({model: new Backbone.Model({title: pj.title})}));
+          router.navigate(hash || '#/home', { 'trigger': true });
+        },
+        type: 'POST',
+        url: 'api/check'
+      });
     });
 
     app.on('initialize:after', function(options) {
-      router = new Router({ controller: Controller });
       Backbone.history.start();
     });
 
-    vent.on('login:success', function(data) {
-      if (data.r) {
-        model = new Restaurant(data.r);
-      }
-
-      initInterface(data);
-    });
-
     vent.on('login:failure', function(error) {
-      login.alert.show(new views.loginalert({ model: new Backbone.Model({ 'status': 'Error', 'message': error }) }));
+      // TODO
     });
-
-    vent.on('login:setupaccount', function() {
-      app.main.show(new Register());
-    });
-
-    vent.on('nav:logout', function() {
-      
-    });
-
-    vent.on('route:dashboard', function() {
-      app.main.show(new GameDashboard());
-    });
-
-    vent.on('route:teradata', function() {
-      app.main.show(new DBDashboard());
-    });
-
-    vent.on('route:home', function(init) {
-      app.main.show(new Home());
-    });
-
-    vent.on('route:init', function(init) {
-      model = new Restaurant();
-      app.main.show(new Setup({model: model}));
-    });
-
-    function initInterface(u) {
-      //user = _.clone(u.user, true);
-      app.main.show(new Home({model: model}));
-
-      router.navigate(hash || '#', { 'trigger': true });
-    }
 
     return app;
   }

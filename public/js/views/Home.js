@@ -2,7 +2,7 @@
 
 define(
   ['marionette','vent','tpl!templates/home.tmpl',
-   'views/home/Dashboard'],
+   'views/main/Dashboard'],
   function (Marionette, vent, home, Dashboard) {
     'use strict';
 

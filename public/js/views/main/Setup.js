@@ -1,12 +1,12 @@
 /*global define*/
 
 define(
-  ['marionette','vent','tpl!templates/home/setup.tmpl'],
-  function (Marionette, vent, setup) {
+  ['marionette','vent','tpl!templates/main/setup.tmpl'],
+  function (Marionette, vent, tmpl) {
     'use strict';
 
     return Marionette.ItemView.extend({
-      template: setup,
+      template: tmpl,
       className: 'container',
       intialize: function() {
         

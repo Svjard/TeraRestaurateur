@@ -6,8 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "make test",
-    "prestart": "node node_modules/requirejs/bin/r.js -o baseUrl=public/js mainConfigFile=public/js/main.js name=../vendor/almond/almond include=main out=public/js/main.min.js wrap=true generateSourceMaps=true optimize=uglify2 preserveLicenseComments=false",
-    "start": "node index"
+    "start": "node index dev"
   },
   "repository": {
     "type": "git",
@@ -47,7 +46,8 @@
     "less-middleware": "*",
     "java": "*",
     "ejs": "*",
-    "bcrypt": "*"
+    "bcrypt": "*",
+    "sockjs": "*"
   },
   "peerDependencies": {
     "express": "*",

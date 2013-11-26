@@ -17,9 +17,8 @@ var express = require('express'),
     connect = require('connect'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    TwitterStrategy = require('passport-twitter').Strategy,
-    FacebookStrategy = require('passport-facebook').Strategy,
     SALT_WORK_FACTOR = 10,
+    sockjs = require('sockjs'),
     pj = require('./package.json');
 
 var app = express();
@@ -30,10 +29,11 @@ app.configure(function(){
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(connect.compress());
-  app.use(express.bodyParser());
+  app.use(express.json());
+  app.use(express.urlencoded());
   app.use(express.cookieParser());
   app.use(express.methodOverride());
-  app.use(express.session({ secret: 'keyboard cat' }));
+  app.use(express.session({ secret: 'I love Teradata!' }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(app.router);
@@ -70,38 +70,10 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-passport.use(new TwitterStrategy({
-    consumerKey: 'qtXkSb7JAMC4SPIV6hpdHQ',
-    consumerSecret: 'dCOaOFf3yxXLEEY7p4MMiz33pWTSz37JX4xoHvUuey8',
-    callbackURL: "http://www.example.com/auth/twitter/callback"
-  },
-  function(token, tokenSecret, profile, done) {
-    /*User.findOrCreate(..., function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });*/
-  }
-));
-
-/*
-passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://www.example.com/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate(..., function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });
-  }
-));*/
-
 passport.use(new LocalStrategy(function (username, password, done) {
   console.log(username);
   console.log(password);
   
-  //process.nextTick(function() {
     usersCollection.findOne({
       'username': username
     }, function (err, user) {
@@ -122,22 +94,18 @@ passport.use(new LocalStrategy(function (username, password, done) {
               
       return done(null, user);
     });
- //});
 }));
 
 app.get('/', function(req, res) {
   res.render('index', { title: pj.title, dev: process.argv[2] || false } );
 });
 
-app.get('/auth/twitter', passport.authenticate('twitter'));
+app.post('/login', passport.authenticate('local', { successRedirect: '#/home', failureRedirect: '/' }));
 
-app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/#home', failureRedirect: '/' }));
-
-app.get('/auth/facebook', passport.authenticate('facebook'));
-
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/#home', failureRedirect: '/' }));
-
-app.post('/login', passport.authenticate('local', { successRedirect: '/#home', failureRedirect: '/' }));
+app.post('/api/check', function(req, res) {
+  if (req.isAuthenticated()) { return res.send(200); }
+  res.send(403);
+});
 
 app.post('/api/register', function(req, res, next) {
   var salt = bcrypt.genSaltSync(10);
@@ -177,4 +145,23 @@ app.get('/api/styles', function(req, res) {
   });
 });
 
-http.createServer(app).listen(7000);
+var server = http.createServer(app);
+
+// WebSockets
+var socket = sockjs.createServer({ 'sockjs_url': 'http://cdn.sockjs.org/sockjs-0.3.min.js' });
+
+socket.on('connection', function(connection) {
+  var id = connection.id = new ObjectID().toHexString();
+
+  connections.push(connection);
+
+  connection.on('close', function() {
+    _.remove(connections, function (connection) {
+      return connection.id === id;
+    });
+  });
+});
+
+socket.installHandlers(server, { 'prefix': '/ws' });
+
+server.listen(5000, '0.0.0.0');
