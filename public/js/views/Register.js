@@ -1,35 +1,43 @@
 /*global define*/
 
 define(
-  ['marionette','vent','tpl!templates/register.tmpl',
+  [
+   'marionette','vent','tpl!templates/register.tmpl',
+   'models/Register'
   ],
-  function (Marionette, vent, register) {
+  function (Marionette, vent, tmpl, Register) {
     'use strict';
 
     return Marionette.ItemView.extend({
-      template: register,
+      template: tmpl,
       className: 'tr-container container',
       events: {
-        'submit #register-form' : 'register'
+        'change [name]'      : 'updateModel',
+        'submit #register-form' : 'verify'
       },
-      register: function() {
-        // Verify all the fields are completed
-        var isValid = true;
-        $(this.el).find('.form-control').each(function() {
-          if ($(this).val().length === 0) {
-            $(this).next().toggleClass('hide').end().parent().addClass('has-error');
-            $(this).on('keyup', function(ev) {
-              if ($(this).val().length !== 0) {
-                $(this).next().toggleClass('hide').end().parent().removeClass('has-error');
-              }
-            });
-            isValid = false;
-          }
-        });
-
-        if (!isValid) {
-          return;
+      initialze: function() {
+        this.model = new Register();
+        Backbone.Validation.bind(this);
+      },
+      updateModel: function(ev) {
+        this.model.set($(ev.currentTarget).attr('name'), $(ev.currentTarget).val());
+        if (this.submit) {
+          this.doValidate();
         }
+      },
+      doValidate: function() {
+        this.model.set('valid', this.model.validate());
+        this.render();
+      },
+      verify: function() {
+        // Verify the form is filled out correctly.
+        this.submit = true;
+        if (!this.model.isValid()) {
+          this.doValidate();
+          return false;
+        }
+
+        $(this.el).find('#login-form').submit();
       }
     });
   }

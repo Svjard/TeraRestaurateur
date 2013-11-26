@@ -1,5 +1,5 @@
 {
-  "name": "Tera-World  Cuisine",
+  "name": "TeraRestaurateur",
   "version": "0.0.0",
   "main": "index.js",
   "ignore": [
@@ -12,6 +12,7 @@
     "backbone":              "*",
     "backbone.babysitter":   "*",
     "backbone.wreqr":        "*",
+    "backbone.validation":   "https://github.com/thedersen/backbone.validation.git",
     "bootstrap":             "*",
     "d3":                    "*",
     "font-awesome":          "*",

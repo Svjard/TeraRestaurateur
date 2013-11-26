@@ -4,6 +4,7 @@ require.config({
     'backbone':              '../vendor/backbone/backbone',
     'backbone.babysitter':   '../vendor/backbone.babysitter/lib/amd/backbone.babysitter',
     'backbone.wreqr':        '../vendor/backbone.wreqr/lib/amd/backbone.wreqr',
+    'backbone.validation':   '../vendor/backbone.validation/dist/backbone-validation-amd',
     'bootstrap':             '../vendor/bootstrap/dist/js/bootstrap',
     'd3':                    '../vendor/d3/d3',
     'jquery':                '../vendor/jquery/jquery',
@@ -20,6 +21,9 @@ require.config({
     'backbone' : {
       deps : ['jquery', 'underscore'],
       exports : 'Backbone'
+    },
+    'backbone.validation' : {
+      deps : ['backbone']
     },
     'bootstrap': {
       deps: ['jquery']
@@ -43,7 +47,7 @@ require.config({
 });
 
 require(
-  ['app','backbone','bootstrap', 'json', 'sockjs'],
+  ['app','backbone','backbone.validation','bootstrap','json','sockjs'],
   function(app, Backbone){
     'use strict';
     
