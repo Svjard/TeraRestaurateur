@@ -5,10 +5,10 @@ require.config({
     'backbone.babysitter':   '../vendor/backbone.babysitter/lib/amd/backbone.babysitter',
     'backbone.wreqr':        '../vendor/backbone.wreqr/lib/amd/backbone.wreqr',
     'bootstrap':             '../vendor/bootstrap/dist/js/bootstrap',
-    'rrule':                 '../vendor/rrule/lib/rrule',
     'd3':                    '../vendor/d3/d3',
     'jquery':                '../vendor/jquery/jquery',
     'json':                  '../vendor/json2/json2',
+    'sockjs':                '../vendor/sockjs-client/sockjs', // requires building, see README.md
     'marionette':            '../vendor/marionette/lib/core/amd/backbone.marionette',
     'pj':                    'package.json', //symlink of root package.json
     'text':                  '../vendor/text/text',
@@ -30,20 +30,20 @@ require.config({
     'underscore' : {
       exports : '_'
     },
+    'sockjs': {
+      'exports': 'SockJS'
+    },
     'json' : {
       exports : 'JSON'
     },
     'd3' : {
       exports : 'd3'
-    },
-    'rrule' : {
-      deps: ['jquery', 'underscore']
     }
   }
 });
 
 require(
-  ['app','backbone','bootstrap', 'rrule', 'json'],
+  ['app','backbone','bootstrap', 'json', 'sockjs'],
   function(app, Backbone){
     'use strict';
     

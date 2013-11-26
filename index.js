@@ -49,6 +49,9 @@ app.configure('development', function(){
     app.use(express.errorHandler());
 });
 
+// WebSocket connections
+var connections = [];
+
 // Store pointers to mongo DBs
 var mongoTeraRestaurateur = 'gsstmongo.td.teradata.com:27017/terarestaurateur',
     teraRestaurateurDB,
@@ -142,6 +145,15 @@ app.get('/api/styles', function(req, res) {
         res.send(styles);
       });
     });
+  });
+});
+
+app.get('/api/users', function(req, res) {
+  console.log('/api/users');
+  usersCollection.find({}, {'salt': 0, 'hash': 0}).toArray(function(err, users) {
+    console.log(users);
+    if (err) { return console.dir(err); }
+    res.send(users);
   });
 });
 

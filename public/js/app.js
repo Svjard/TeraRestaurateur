@@ -37,6 +37,12 @@ define(
         e.preventDefault();
       });
 
+      var sock = new SockJS('http://0.0.0.0:5000/ws');
+      sock.onmessage = function(e) {
+        console.log('message', e.data);
+        var message = JSON.parse(e.data);
+      };
+
       hash = window.location.hash;
       $.ajax({
         error: function(jqxhr, status, error) {

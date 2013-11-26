@@ -104,3 +104,5 @@ To Get:
   2. 
 
 Target Data Set Size: 10-50TB (is this feasible?) {means some in HDD}
+
+i18n support

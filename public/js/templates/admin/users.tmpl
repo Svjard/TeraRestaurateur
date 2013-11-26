@@ -1,0 +1,34 @@
+<% console.log(obj) %>
+<div class="panel panel-default">
+	<div class="panel-heading">Registered Users</div>
+	<div class="panel-body">
+		<div class="table-responsive">
+			<table class="table table-condensed table-bordered" style="text-align: center !important;">
+				<thead>
+					<tr>
+						<th>First</th>
+						<th>Last</th>
+						<th>Email</th>
+						<th>Checked-In</th>
+					</tr>
+					<tr>
+						<th><input type="text" class="form-control"/></th>
+						<th><input type="text" class="form-control"/></th>
+						<th><input type="text" class="form-control"/></th>
+						<th><input type="text" class="form-control"/></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for (var i = 0; i < obj.users.length; i++) { %>
+					<tr>
+						<td><%= obj.users.models[i].attributes.firstname %></td>
+						<td><%= obj.users.models[i].attributes.lastname %></td>
+						<td><%= obj.users.models[i].attributes.username %></td>
+						<td><input type="checkbox"/></td>
+					</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
